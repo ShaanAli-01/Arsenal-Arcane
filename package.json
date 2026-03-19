@@ -1,0 +1,12 @@
+{
+  "name": "arsenal-arcane",
+  "version": "1.0.0",
+  "description": "Arsenal Arcane Discord Bot",
+  "main": "arsenal-arcane-slash.js",
+  "scripts": {
+    "start": "node arsenal-arcane-slash.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.0.0"
+  }
+}
