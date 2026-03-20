@@ -116,14 +116,14 @@ function getEquipped(p) {
 }
 function hpBar(hp, max) {
   const f = Math.max(0, Math.round((hp / max) * 10));
-  return `[${"█".repeat(f)}${"▒".repeat(10 - f)}] ${hp}/${max}`;
+  return `[${"#".repeat(f)}${"-".repeat(10 - f)}] ${hp}/${max}`;
 }
 function bigHpBar(hp, max, size) {
   size = size || 15;
   const f = Math.max(0, Math.round((hp / max) * size));
-  return `[${"█".repeat(f)}${"░".repeat(size - f)}] ${hp}/${max}`;
+  return `[${"#".repeat(f)}${".".repeat(size - f)}] ${hp}/${max}`;
 }
-const SUP = ["⁰","¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹"];
+const SUP = ["0","1","2","3","4","5","6","7","8","9"];
 function toSup(n) { return String(n).split("").map(d => SUP[+d]).join(""); }
 
 // ============================================================
@@ -236,7 +236,7 @@ function weaponXpBar(w) {
   const needed = weaponXpNeeded(w);
   const xp     = w.xp || 0;
   const f      = Math.round((xp / needed) * 10);
-  return `[${"█".repeat(f)}${"░".repeat(10 - f)}] ${xp}/${needed} XP`;
+  return `[${"#".repeat(f)}${".".repeat(10 - f)}] ${xp}/${needed} XP`;
 }
 function isValidWeapon(w) {
   return w && w.serial && w.name && w.rarity && w.variant && w.emoji && w.element;
@@ -352,7 +352,7 @@ setInterval(() => { if (!globalBoss) spawnBoss(); }, 30 * 60 * 1000);
 
 function bossTierBar(hp, maxHp) {
   const f = Math.round((hp / maxHp) * 20);
-  return `[${"█".repeat(f)}${"░".repeat(20 - f)}] ${hp.toLocaleString()}/${maxHp.toLocaleString()}`;
+  return `[${"#".repeat(f)}${".".repeat(20 - f)}] ${hp.toLocaleString()}/${maxHp.toLocaleString()}`;
 }
 
 // ============================================================
@@ -369,7 +369,7 @@ const raidBossPool = [
 ];
 function raidHpBar(hp, maxHp) {
   const f = Math.round((hp / maxHp) * 20);
-  return `[${"█".repeat(f)}${"░".repeat(20 - f)}] ${hp}/${maxHp}`;
+  return `[${"#".repeat(f)}${".".repeat(20 - f)}] ${hp}/${maxHp}`;
 }
 function scheduleRaidExpiry(ms, reason) {
   setTimeout(() => {
@@ -474,7 +474,7 @@ if (cmd === "stats") {
   const w    = getEquipped(player);
   const wl   = w ? weaponLabel(w) : "None — use `!equip #id`";
   const xpF  = Math.round((player.xp / player.xpNeeded) * 10);
-  const xpD  = `[${"█".repeat(xpF)}${"░".repeat(10 - xpF)}] ${player.xp}/${player.xpNeeded}`;
+  const xpD  = `[${"#".repeat(xpF)}${".".repeat(10 - xpF)}] ${player.xp}/${player.xpNeeded}`;
   const tier = ROLL_TIER_NAMES[player.rollTier];
   const nextTierEntry = Object.entries(ROLL_TIER_LEVELS).find(([t]) => +t > player.rollTier);
   const tierLine = nextTierEntry
@@ -482,14 +482,14 @@ if (cmd === "stats") {
     : `${ROLL_TIER_EMOJI[player.rollTier]} **${tier} Roll** (MAX)`;
   return message.reply(
     `📊 **${message.author.username}'s Stats**\n` +
-    `━━━━━━━━━━━━━━━━\n` +
+    `----------------\n` +
     `❤️ HP: \`${hpBar(player.hp, player.maxHp)}\`\n` +
     `⬆️ Level: **${player.level}** | XP: \`${xpD}\`\n` +
     `🪙 Coins: **${player.coins.toLocaleString()}**\n` +
     `${tierLine}\n` +
-    `━━━━━━━━━━━━━━━━\n` +
+    `----------------\n` +
     `⚔️ ${wl}\n` +
-    `━━━━━━━━━━━━━━━━`
+    `----------------`
   );
 }
 
